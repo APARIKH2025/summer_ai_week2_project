@@ -95,19 +95,24 @@ def depthFirstSearch(problem: SearchProblem):
     while not (goal_found):
         new_instance = mystack.pop()
         node = new_instance[0]
-        if x != 1:
-            moves.append(new_instance[1])
-        x += 1 
+        if x != 1:            # Used to stop the None from above from being added into moves
+            moves = new_instance[1]
+        x += 1
+        print(node)
         
         if (problem.isGoalState(node)):
             goal_found = True
+            return moves
         else:
             visited.append(node)
             for new, move, cost in problem.getSuccessors(node):
                 if(not(new in visited)):
-                    mystack.push((new, move, cost))
-    print(moves)
-    return moves
+                    new_moves = moves
+                    moves = []
+                    new_moves.append(move)
+                    mystack.push((new, new_moves, cost))        
+            print(mystack.list)    
+
 
     
 
