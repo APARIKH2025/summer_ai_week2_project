@@ -1,0 +1,3 @@
+I faced some problems with managing the location of PacMan whenever the DFS reset to a certain point after calculating the wrong path.
+I was able to overcome this challenge by redesigning the way I stored moves.
+I did not use any additional resources to assist me with the project.

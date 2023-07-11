@@ -98,7 +98,6 @@ def depthFirstSearch(problem: SearchProblem):
         if x != 1:            # Used to stop the None from above from being added into moves
             moves = new_instance[1]
         x += 1
-        print(node)
         
         if (problem.isGoalState(node)):
             goal_found = True
@@ -106,12 +105,10 @@ def depthFirstSearch(problem: SearchProblem):
         else:
             visited.append(node)
             for new, move, cost in problem.getSuccessors(node):
-                if(not(new in visited)):
-                    new_moves = moves
-                    moves = []
-                    new_moves.append(move)
-                    mystack.push((new, new_moves, cost))        
-            print(mystack.list)    
+                if(not(new in visited) and not(new in (state[0] for state in mystack.list))):
+
+                    new_moves = moves + [move]
+                    mystack.push((new, new_moves, cost))   
 
 
     
@@ -121,7 +118,28 @@ def depthFirstSearch(problem: SearchProblem):
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    visited = []
+    myQueue = util.Queue()
+    myQueue.push((problem.getStartState(),None,None))
+    goal_found = False
+    moves = []
+    x = 1
+    while not (goal_found):
+        new_instance = myQueue.pop()
+        node = new_instance[0]
+        if x != 1:            # Used to stop the None from above from being added into moves
+            moves = new_instance[1]
+        x += 1
+        
+        if (problem.isGoalState(node)):
+            goal_found = True
+            return moves
+        else:
+            visited.append(node)
+            for new, move, cost in problem.getSuccessors(node):
+                if(not(new in visited) and not(new in (state[0] for state in myQueue.list))):
+                    new_moves = moves + [move]
+                    myQueue.push((new, new_moves, cost)) 
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
